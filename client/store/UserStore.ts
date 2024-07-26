@@ -1,13 +1,14 @@
 import { create } from "zustand";
+import IUserStore from "../interface/IUserStore";
 
-const UserStore = create((set) => ({
-  token: localStorage.getItem("token") || null,
+const UserStore = create<IUserStore>((set) => ({
+  accessToken: "",
   name: "",
   email: "",
   profile: "",
   id: "",
-  setUser: ({ email, name, profile, id }) => {
-    set(() => ({ email, name, profile, id }));
+  setUser: ({ accessToken, name, email, profile, id }) => {
+    set(() => ({ accessToken, name, email, profile, id }));
   },
 }));
 

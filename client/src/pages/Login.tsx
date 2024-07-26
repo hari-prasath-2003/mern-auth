@@ -1,28 +1,36 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import axios from "axios";
+import axios from "../../service/api/axios";
 import { useState } from "react";
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import UserStore from "../../store/UserStore";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const setUser = UserStore((state: any) => state.setUser);
+  const setUser = UserStore((state) => state.setUser);
+
+  const queryClient = useQueryClient();
 
   const navigate = useNavigate();
+
+  const { state: redirectPageState } = useLocation();
+  const redirectOnSuccessLink = redirectPageState?.link || "/";
+
   async function onSubmit() {
     try {
-      const res = await axios.post("http://localhost:3000/auth/login", { email, password });
+      const res = await axios.post("/auth/login", { email, password }, { withCredentials: true });
       const data = res.data;
-      setUser({ email: data.email, profile: data.profile, name: data.name, id: data.id });
-      navigate("/");
+      setUser({ email: data.email, profile: data.profile, name: data.name, id: data.id, accessToken: data.token });
+      queryClient.invalidateQueries("refreshToken");
+      navigate(redirectOnSuccessLink, { state: { fromLocation: "/login" }, replace: true });
     } catch (error: any) {
       const errData = error.response.data;
       setError(errData.error);
@@ -31,7 +39,7 @@ export default function Login() {
 
   return (
     <>
-      <div className="w-full h-screen lg:grid lg:grid-cols-2 ">
+      <div className="w-full h-screen lg:grid lg:grid-cols-2">
         <div className="flex  h-screen items-center justify-center py-12">
           <div className="mx-auto grid w-[350px] gap-6">
             <div className="grid gap-2 text-center">

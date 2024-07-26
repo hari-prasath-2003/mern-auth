@@ -4,11 +4,7 @@ import User from "../models/User";
 import { Document, Model, Query } from "mongoose";
 
 export default class UserRepository implements IUserRepository {
-  private UserModel: Model<IUser>;
-
-  constructor() {
-    this.UserModel = User;
-  }
+  private UserModel: Model<IUser> = User;
 
   async create(email: string, password: string, name: string): Promise<IUser> {
     const newUser = new this.UserModel({

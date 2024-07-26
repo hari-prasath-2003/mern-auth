@@ -1,16 +1,19 @@
 import { ITokenManager } from "../interface/ITokenManager";
-import jwt,{JwtPayload} from "jsonwebtoken"
+import jwt, { JwtPayload } from "jsonwebtoken";
 
-export default class TokenManager implements ITokenManager{
-    private tokenLibrary = jwt;
-    private secretKey = "my-secret-key";
+export default class TokenManager implements ITokenManager {
+  private tokenLibrary = jwt;
+  private secretKey = "my-secret-key";
 
-    generateToken(payload: object): String {
-        return this.tokenLibrary.sign(payload,this.secretKey);
-    }
+  generateAccessToken(payload: object): String {
+    return this.tokenLibrary.sign(payload, this.secretKey, { expiresIn: "1h" });
+  }
 
-    verifyToken(token: string): JwtPayload | null {
-        return this.tokenLibrary.verify(token,this.secretKey) as JwtPayload;
-    }
+  generateRefreshToken(payload: object): String {
+    return this.tokenLibrary.sign(payload, this.secretKey, { expiresIn: "1d" });
+  }
 
+  verifyToken(token: string): JwtPayload {
+    return this.tokenLibrary.verify(token, this.secretKey) as JwtPayload;
+  }
 }

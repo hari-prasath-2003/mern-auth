@@ -18,6 +18,10 @@ const userSchema = new mongoose.Schema<IUser>({
     type: String,
     default: "",
   },
+  interests: {
+    type: [String],
+    default: [],
+  },
 });
 
 const User = mongoose.model<IUser>("user", userSchema);

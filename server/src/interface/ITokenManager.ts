@@ -1,6 +1,7 @@
 import { JwtPayload } from "jsonwebtoken";
 
 export interface ITokenManager {
-  generateToken(payload: object): String;
-  verifyToken(token: string): JwtPayload | null;
+  generateRefreshToken(payload: object): String;
+  generateAccessToken(payload: object): String;
+  verifyToken(token: string): JwtPayload;
 }

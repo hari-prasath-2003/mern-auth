@@ -24,7 +24,7 @@ export default function Signup() {
       const res = await axios.post("http://localhost:3000/auth/register", { email, password, name });
       const data = res.data;
       setUser({ email: data.email, profile: data.profile, name: data.name, id: data.id });
-      navigate("/");
+      navigate("/", { state: { fromLocation: "/signup" } });
     } catch (error: any) {
       const errData = error.response.data;
       setError(errData.error);

@@ -10,17 +10,18 @@ export default class AuthMiddleware implements IAuthMiddleware {
   }
 
   verifyToken(req: Request, res: Response, next: NextFunction) {
-    const token = req.headers.authorization as string;
+    //parsing access token
+    const token = req.headers.authorization?.replace("Bearer ", "") as string;
+
     if (!token) {
-      return res.status(403).json({ msg: "please provide token to access protected route" });
+      return res.status(401).json({ msg: "please provide access token to access protected route" });
     }
     try {
       const user = this.tokenManager.verifyToken(token);
-      // req.
-      // req.user = user;
+      res.locals.userId = user.id;
       next();
-    } catch (error) {
-      res.status(403).json({ msg: "Invalid jwt token please login to access protected route" });
+    } catch (error: any) {
+      return res.status(401).json({ msg: "Invalid access token please send refresh to get new access token" });
     }
   }
 }

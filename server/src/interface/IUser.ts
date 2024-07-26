@@ -5,4 +5,5 @@ export default interface IUser extends Document {
   password: string;
   name: string;
   profile: string;
+  interests: [string];
 }

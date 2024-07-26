@@ -1,0 +1,34 @@
+[{
+  "_id": {
+    "$oid": "637612c380e11fac9c560dbd"
+  },
+  "username": "Hari Prasath M",
+  "googleId": "102523763593390642660",
+  "profile": "https://lh3.googleusercontent.com/a/ALm5wu1zeWZbFczgBS1bzN2evQikFoC10OPxU4ugQ8-K=s96-c",
+  "__v": 0,
+  "role": "student",
+  "email": "hariprasath.cs21@bitsathy.ac.in",
+  "stdid": "7376211cs155",
+  "mentor": "gokulnathan.cs21@bitsathy.ac.in",
+  "labinc": "hariharant.cs21@bitsathy.ac.in"
+},{
+  "_id": {
+    "$oid": "6378ccc65ef819437e96f793"
+  },
+  "username": "GOKULNATHAN R V",
+  "email": "gokulnathan.cs21@bitsathy.ac.in",
+  "googleId": "109064849018130687911",
+  "profile": "https://lh3.googleusercontent.com/a/ALm5wu3x-aNGkwHBBWxd7tG1TEJkDC0gqo_RTYJd5cxnMA=s96-c",
+  "__v": 0,
+  "role": "mentor"
+},{
+  "_id": {
+    "$oid": "63ef381d8e133f952e7c6a0a"
+  },
+  "username": "HARIHARAN T",
+  "email": "hariharant.cs21@bitsathy.ac.in",
+  "googleId": "115810525992107291034",
+  "profile": "https://lh3.googleusercontent.com/a/AEdFTp61te6MqR1pnx4zmBXc2FYTU_Jycrxc7qmskZMn7w=s96-c",
+  "__v": 0,
+  "role": "labinc"
+}]

@@ -8,7 +8,7 @@
     },
     "include": [
       "src/**/*.ts"
-    ],
+, "src/routes/test.js"    ],
     "exclude": [
       "node_modules"
     ]
