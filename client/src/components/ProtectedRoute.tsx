@@ -1,8 +1,8 @@
 import useRefreshToken from "@/hooks/useRefreshToken";
-import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import AuthenticationLoading from "./loading/AuthenticationLoading";
-import UserStore from "../../store/UserStore";
+import UserStore from "../store/UserStore";
 
 export default function ProtectedRoute() {
   const refreshToken = useRefreshToken();

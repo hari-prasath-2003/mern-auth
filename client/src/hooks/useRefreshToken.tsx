@@ -1,8 +1,9 @@
-import axios from "../../service/api/axios";
-import UserStore from "../../store/UserStore";
+import axios from "../service/api/axios";
+import UserStore from "../store/UserStore";
+import IUserStore from "../interface/IUserStore";
 
 export default function useRefreshToken() {
-  const setUser = UserStore((state) => state.setUser);
+  const setUser = UserStore((state: IUserStore) => state.setUser);
 
   return async function refreshToken() {
     const res = await axios.get("/auth/refresh", { withCredentials: true });

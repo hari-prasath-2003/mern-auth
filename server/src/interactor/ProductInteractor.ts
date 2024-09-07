@@ -9,7 +9,7 @@ export class ProductInteractor implements IProductInteractor {
     this.productRepository = productRepository;
   }
 
-  public async getRecomendationProducts(userInterests: [string] | []): Promise<IProduct[]> {
+  public async getRecomendationProducts(userInterests: string[]): Promise<IProduct[]> {
     const recomendationProduct = await this.productRepository.findByCategories(userInterests);
     return recomendationProduct;
   }

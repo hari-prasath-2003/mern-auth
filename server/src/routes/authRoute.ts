@@ -11,7 +11,6 @@ const userRepository = new UserRepository();
 const userInteractor = new UserInteractor(userRepository);
 
 const authInteractor = new AuthInteractor(userRepository);
-
 const authController = new AuthController(tokenManager, authInteractor, userInteractor);
 
 const router = Router();

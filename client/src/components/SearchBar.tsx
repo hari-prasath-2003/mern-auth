@@ -8,7 +8,7 @@ function SearchBar() {
 
   const [searchParam] = useSearchParams();
 
-  const [searchQuery, setSearchQuery] = useState(() => searchParam.get("q"));
+  const [searchQuery, setSearchQuery] = useState(() => searchParam.get("q") || "");
 
   function handleKeyDown(e) {
     if (!searchQuery) return;

@@ -9,7 +9,7 @@ function ProductCard({ image, title, price, rate, id }) {
   };
 
   return (
-    <Card onClick={handleClick} className="min-w-[250px] w-[min-content]">
+    <Card onClick={handleClick} className="min-w-[250px] ">
       <CardHeader>
         <img src={image} className="object-contain h-[170px]" />
       </CardHeader>

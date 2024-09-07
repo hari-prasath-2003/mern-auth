@@ -1,6 +1,6 @@
+import { CreateError, NotFoundError, UnAuthenticatedError } from "../error";
 import IAuthInteractor from "../interface/IAuthInteractor";
 import IUserRepository from "../interface/IUserRepository";
-import ClientError from "../error/ClientError";
 
 export default class AuthInteractor implements IAuthInteractor {
   private userRepository: IUserRepository;
@@ -16,12 +16,12 @@ export default class AuthInteractor implements IAuthInteractor {
     const user = await this.userRepository.findByEmail(email);
 
     if (!user) {
-      throw new ClientError("user not found please register");
+      throw new NotFoundError("user not found please signup");
     }
     const passwordMatch = user.password == password;
 
     if (!passwordMatch) {
-      throw new ClientError("credential does't match");
+      throw new UnAuthenticatedError("credential doesn't match");
     }
 
     return { email: user.email, name: user.name, profile: user.profile, id: user._id };
@@ -34,18 +34,10 @@ export default class AuthInteractor implements IAuthInteractor {
   ): Promise<{ email: string; name: string; profile: string; id: string }> {
     const user = await this.userRepository.findByEmail(email);
     if (user) {
-      throw new ClientError("email already exists please login");
+      throw new CreateError("email already exists please login");
     }
     const newUser = await this.userRepository.create(email, password, name);
 
     return { email: newUser.email, name: newUser.name, profile: newUser.profile, id: newUser._id };
-  }
-
-  public async getUser(id: string): Promise<{ email: string; name: string; profile: string; id: string }> {
-    const user = await this.userRepository.find(id);
-    if (!user) {
-      throw new ClientError("user not found");
-    }
-    return { email: user.email, name: user.name, profile: user.profile, id: user._id };
   }
 }

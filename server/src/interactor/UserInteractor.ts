@@ -21,6 +21,7 @@ export class UserInteractor implements IUserInteractor {
         id: user._id,
       };
     } catch (error) {
+
       throw new Error("An error occurred while fetching user data");
     }
   }

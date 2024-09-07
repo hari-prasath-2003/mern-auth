@@ -5,7 +5,7 @@ import "./index.css";
 import { QueryClient, QueryClientProvider, QueryErrorResetBoundary } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ErrorBoundary } from "react-error-boundary";
-import { Button } from "./components/ui/button.tsx";
+import ErrorFallback from "./components/ErrorFallback.tsx";
 
 const queryClient = new QueryClient();
 
@@ -16,14 +16,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         {({ reset }) => (
           <ErrorBoundary
             onReset={reset}
-            fallbackRender={({ error, resetErrorBoundary }) => {
-              return (
-                <div>
-                  There was an error!
-                  <Button onClick={() => resetErrorBoundary()}>Try again</Button>
-                </div>
-              );
-            }}
+            fallbackRender={({ error, resetErrorBoundary }) => (
+              <ErrorFallback error={error} resetErrorBoundary={resetErrorBoundary} />
+            )}
           >
             <App />
           </ErrorBoundary>

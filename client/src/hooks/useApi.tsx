@@ -1,11 +1,12 @@
-import { axiosPrivate } from "../../service/api/axios";
-import UserStore from "../../store/UserStore";
+import { axiosPrivate } from "../service/api/axios";
+import UserStore from "../store/UserStore";
 import { useEffect } from "react";
 import useRefreshToken from "./useRefreshToken";
 import { useNavigate } from "react-router-dom";
+import IUserStore from "@/interface/IUserStore";
 
 export default function useApi() {
-  const { accessToken } = UserStore((state) => ({ accessToken: state.accessToken }));
+  const { accessToken } = UserStore((state: IUserStore) => ({ accessToken: state.accessToken }));
 
   const refreshToken = useRefreshToken();
 

@@ -1,4 +1,3 @@
-import IElasticSearchClient from "../interface/IElasticSearchClient";
 import { IProduct } from "../interface/IProduct";
 import { IProductInteractor } from "../interface/IProductInteractor";
 import ISearchInteractor from "../interface/ISearchInteractor";

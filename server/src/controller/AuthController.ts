@@ -3,7 +3,6 @@ import { ITokenManager } from "../interface/ITokenManager";
 import IAuthController from "../interface/IAuthController";
 import IAuthInteractor from "../interface/IAuthInteractor";
 import mongoose, { MongooseError } from "mongoose";
-import ClientError from "../error/ClientError";
 import { JwtPayload } from "jsonwebtoken";
 import { IUserInteractor } from "../interface/IUserInteractor";
 
@@ -42,11 +41,7 @@ export default class AuthController implements IAuthController {
         token: accessToken,
       });
     } catch (error: any) {
-      if (error instanceof ClientError || error instanceof mongoose.Error.ValidatorError) {
-        return res.status(400).json({ msg: "login failed", error: error.message });
-      } else {
-        next(error);
-      }
+      next(error);
     }
   }
 
@@ -74,11 +69,7 @@ export default class AuthController implements IAuthController {
         token: accessToken,
       });
     } catch (error: any) {
-      if (error instanceof ClientError || error instanceof mongoose.Error.ValidatorError) {
-        return res.status(400).json({ msg: "registration failed", error: error.message });
-      } else {
-        next(error);
-      }
+      next(error);
     }
   }
 
@@ -92,7 +83,7 @@ export default class AuthController implements IAuthController {
       const userDetail = this.tokenManager.verifyToken(token) as JwtPayload;
       const authenticatedUser = await this.userInteractor.getUser(userDetail.id);
       if (!authenticatedUser) {
-        return res.status(400).json({ msg: "invalid id provided in token" });
+        return res.status(401).json({ msg: "invalid id provided in token" });
       }
       const newAccessToken = this.tokenManager.generateAccessToken({ id: authenticatedUser.id });
 
