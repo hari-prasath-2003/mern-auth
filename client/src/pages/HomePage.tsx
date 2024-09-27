@@ -1,22 +1,25 @@
-import ProductListLoading from "@/components/loading/ProductListLoading";
+import ProductListLoading from "@/components/loading/ProductRecomendationListLoading";
 import useApi from "@/hooks/useApi";
-import CategoryList from "@/components/CategoryList";
 import ScrollLayout from "@/layout/ScrollLayout";
 import { useQuery } from "@tanstack/react-query";
-import CategoryProductList from "@/components/CategoryProductList";
+import ProductRecomendationDTO from "../../../shared/dto/ProductRecomendationDTO";
+import CategoryBadgeLoading from "@/components/loading/CategoryBadgeLoading";
+import ProductRecomendationList from "@/components/ProductRecomendationList";
+import ProductCategoryList from "@/components/ProductCategoryList";
+import ProductRecomendationListLoading from "@/components/loading/ProductRecomendationListLoading";
 
 function HomePage() {
   const api = useApi();
 
-  const homeProductQuery = useQuery({
-    queryKey: ["homeProducts"],
+  const productRecomendationQuery = useQuery<ProductRecomendationDTO[]>({
+    queryKey: ["productRecomendation"],
     queryFn: async () => {
       const response = await api.get("/home");
       return response.data;
     },
   });
 
-  const categoryQuery = useQuery({
+  const productCategoryListQuery = useQuery<string[]>({
     queryKey: ["category"],
     queryFn: async () => {
       const response = await api.get("/home/categories");
@@ -24,22 +27,28 @@ function HomePage() {
     },
   });
 
-  if (homeProductQuery.isLoading) {
-    return (
-      <ScrollLayout>
-        <ProductListLoading />
-      </ScrollLayout>
-    );
-  }
-
   return (
     <>
       <ScrollLayout>
-        <CategoryList categories={categoryQuery.data} />
+        <ProductCategoryList
+          isLoading={productCategoryListQuery.isLoading}
+          error={productCategoryListQuery.error}
+          LoadingComponent={
+            <ScrollLayout>
+              <CategoryBadgeLoading />
+            </ScrollLayout>
+          }
+          ErrorComponent={<div>{"error something went wrong while fetching category list"}</div>}
+          data={productCategoryListQuery.data || []}
+        />
       </ScrollLayout>
-      {homeProductQuery.data.map(({ category, products }) => {
-        return <CategoryProductList category={category} products={products} key={category} />;
-      })}
+      <ProductRecomendationList
+        data={productRecomendationQuery.data || []}
+        isLoading={productRecomendationQuery.isLoading}
+        error={productRecomendationQuery.error}
+        LoadingComponent={<ProductRecomendationListLoading />}
+        ErrorComponent={<div>{"error something went wrong while fetching product recomendation"}</div>}
+      />
     </>
   );
 }

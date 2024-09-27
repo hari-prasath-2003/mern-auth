@@ -1,7 +1,8 @@
 import ScrollLayout from "@/layout/ScrollLayout";
 import ProductList from "./ProductList";
+import ProductRecomendationDTO from "../../../shared/dto/ProductRecomendationDTO";
 
-function CategoryProductList({ category, products }) {
+function ProductsRecomendation({ category, products }: ProductRecomendationDTO) {
   return (
     <div className="flex flex-col gap-3" key={category}>
       <div className="font-bold capitalize">{category}</div>
@@ -12,4 +13,4 @@ function CategoryProductList({ category, products }) {
   );
 }
 
-export default CategoryProductList;
+export default ProductsRecomendation;

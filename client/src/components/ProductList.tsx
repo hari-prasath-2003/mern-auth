@@ -1,10 +1,11 @@
+import ProductDTO from "../../../shared/dto/ProductDTO";
 import ProductCard from "./ProductCard";
 
-function ProductList({ products }) {
+function ProductList({ products }: { products: ProductDTO[] }) {
   return (
     <>
-      {products.map(({ coverImage, title, rate, price, _id }) => {
-        return <ProductCard image={coverImage} title={title} price={price} rate={rate} id={_id} key={_id} />;
+      {products.map(({ coverImage, title, price, _id }) => {
+        return <ProductCard coverImage={coverImage} title={title} price={price} _id={_id} key={_id} />;
       })}
     </>
   );

@@ -32,6 +32,14 @@ const productSchema = new mongoose.Schema<IProduct>({
     type: String,
     default: "",
   },
+  discount: {
+    type: Number,
+    default: 0,
+  },
+  deliveryCharge: {
+    type: Number,
+    default: 0,
+  },
 });
 
 productSchema.index(

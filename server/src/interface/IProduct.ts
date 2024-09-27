@@ -1,7 +1,6 @@
-import { ObjectId } from "mongoose";
+import { Document } from "mongoose";
 
-export interface IProduct {
-  _id: ObjectId;
+export interface IProduct extends Document {
   title: string;
   price: number;
   description: string;
@@ -9,4 +8,6 @@ export interface IProduct {
   coverImage: string;
   images: string[];
   rate: number;
+  discount: number;
+  deliveryCharge: number;
 }

@@ -1,6 +1,8 @@
 import { IProductRepository } from "./../interface/IProductRepository";
 import { IProductInteractor } from "../interface/IProductInteractor";
 import { IProduct } from "../interface/IProduct";
+import ProductRecomendationDTO from "../../../shared/dto/ProductRecomendationDTO";
+import { NotFoundError } from "../error";
 
 export class ProductInteractor implements IProductInteractor {
   private productRepository: IProductRepository;
@@ -9,15 +11,15 @@ export class ProductInteractor implements IProductInteractor {
     this.productRepository = productRepository;
   }
 
-  public async getRecomendationProducts(userInterests: string[]): Promise<IProduct[]> {
+  public async getRecomendationProducts(userInterests: string[]): Promise<ProductRecomendationDTO[]> {
     const recomendationProduct = await this.productRepository.findByCategories(userInterests);
     return recomendationProduct;
   }
 
   public async getProductById(id: string): Promise<IProduct> {
-    const product = await this.productRepository.find(id);
+    const product = await this.productRepository.findById(id);
     if (!product) {
-      throw new Error("product is not in database");
+      throw new NotFoundError("product is not in database");
     }
     return product;
   }

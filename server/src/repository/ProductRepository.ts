@@ -1,58 +1,32 @@
-import { Model, Query } from "mongoose";
-import { IProduct } from "../interface/IProduct";
+import { Model } from "mongoose";
 import { IProductRepository } from "../interface/IProductRepository";
+import { IProduct } from "../interface/IProduct";
 import Products from "../models/Product";
+import ProductDTO from "../../../shared/dto/ProductDTO";
 
 export class ProductRepository implements IProductRepository {
   private ProductModel: Model<IProduct> = Products;
 
-  public async find(id: string): Promise<Query<IProduct | null, IProduct>> {
-    const product = await this.ProductModel.findById(id);
+  public async findById(id: string) {
+    const product = await this.ProductModel.findById<IProduct>(id);
     return product;
   }
 
-  public async findByCategories(categories: string[] | []): Promise<Query<IProduct[], IProduct, {}, IProduct, "find">> {
-    let aggregationPipeline = [];
-
-    if (categories.length) {
-      aggregationPipeline.push({ $match: { category: { $in: categories } } });
-    }
-
-    aggregationPipeline.push(
-      {
-        $group: {
-          _id: "$category",
-          products: {
-            $push: {
-              _id: "$_id",
-              title: "$title",
-              price: "$price",
-              category: "$category",
-              coverImage: "$coverImage",
-              rate: "$rate",
-            },
-          },
-        },
-      },
-      {
-        $limit: 5,
-      },
-      {
-        $project: {
-          _id: 0,
-          category: "$_id",
-          products: {
-            $slice: ["$products", 10],
-          },
-        },
-      }
+  public findByCategories(categories: string[] | []) {
+    const categoryProductList = Promise.all(
+      categories.map(async (category) => {
+        const products = await this.ProductModel.find<ProductDTO>({ category })
+          .select("title price coverImage")
+          .limit(10);
+        return { category, products };
+      })
     );
 
-    return await this.ProductModel.aggregate(aggregationPipeline).exec();
+    return categoryProductList;
   }
 
-  public async search(query: string) {
-    const searchResults = await this.ProductModel.aggregate<IProduct>([
+  public search(query: string) {
+    const searchResults = this.ProductModel.aggregate<IProduct>([
       {
         $match: { $text: { $search: query } },
       },

@@ -4,6 +4,7 @@ import authRouter from "./AuthRoute";
 import homeRoute from "./HomeRoute";
 import productRoute from "./ProductRoute";
 import searchRoute from "./SearchRoute";
+import cartRoute from "./CartRoute";
 import AuthMiddleware from "../middleware/AuthMiddleware";
 
 const router = Router();
@@ -19,5 +20,7 @@ router.use("/home", homeRoute);
 router.use("/product", productRoute);
 
 router.use("/search", searchRoute);
+
+router.use("/cart", cartRoute);
 
 export default router;

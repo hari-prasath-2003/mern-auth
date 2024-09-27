@@ -18,6 +18,7 @@ export default class AuthInteractor implements IAuthInteractor {
     if (!user) {
       throw new NotFoundError("user not found please signup");
     }
+
     const passwordMatch = user.password == password;
 
     if (!passwordMatch) {

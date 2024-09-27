@@ -1,5 +1,5 @@
 import ProductGridLayout from "@/layout/ProductGridLayout";
-import ProductListLoading from "./ProductListLoading";
+import ProductListLoading from "./ProductRecomendationListLoading";
 
 function SearchLoading() {
   return (
