@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import axios from "axios";
+import axios from "../service/api/axios";
 import { useState } from "react";
 import UserStore from "../store/UserStore";
 
@@ -17,11 +17,13 @@ export default function Signup() {
 
   const setUser = UserStore((state: any) => state.setUser);
 
+  const api = axios;
+
   const navigate = useNavigate();
 
   async function onSubmit() {
     try {
-      const res = await axios.post("http://localhost:3000/auth/register", { email, password, name });
+      const res = await api.post("http://localhost:3000/auth/register", { email, password, name });
       const data = res.data;
       setUser({ email: data.email, profile: data.profile, name: data.name, id: data.id });
       navigate("/", { state: { fromLocation: "/signup" } });

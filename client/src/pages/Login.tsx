@@ -17,6 +17,8 @@ export default function Login() {
 
   const setUser = UserStore((state) => state.setUser);
 
+  const api = axios;
+
   const queryClient = useQueryClient();
 
   const navigate = useNavigate();
@@ -26,7 +28,7 @@ export default function Login() {
 
   async function onSubmit() {
     try {
-      const res = await axios.post("/auth/login", { email, password }, { withCredentials: true });
+      const res = await api.post("/auth/login", { email, password }, { withCredentials: true });
       const data = res.data;
       setUser({ email: data.email, profile: data.profile, name: data.name, id: data.id, accessToken: data.token });
       queryClient.invalidateQueries("refreshToken");
