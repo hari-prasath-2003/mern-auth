@@ -1,4 +1,4 @@
-import { Link, NavLink, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import { Home, Menu, CircleUser, ShoppingBasket, Package } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -6,7 +6,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
@@ -14,10 +13,12 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import SearchBar from "@/components/SearchBar";
 
 export function MainLayout() {
+  const navigate = useNavigate();
+
   return (
     <div>
       <div className="flex flex-col w-full">
-        <header className="flex h-14 justify-between items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
+        <header className="flex h-14 justify-between items-center gap-4 border-b bg-muted/40 px-4">
           <div className="hidden md:block">
             <div className="flex gap-2">
               <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
@@ -118,9 +119,8 @@ export function MainLayout() {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>Settings</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => navigate("/upload")}>Account</DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>Logout</DropdownMenuItem>
               </DropdownMenuContent>
@@ -128,7 +128,7 @@ export function MainLayout() {
             <SearchBar />
           </div>
         </header>
-        <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6 w-full">
+        <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6  w-full ">
           <div x-chunk="dashboard-02-chunk-1">
             <Outlet />
           </div>

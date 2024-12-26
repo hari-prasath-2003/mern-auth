@@ -40,7 +40,7 @@ export default function Login() {
   return (
     <>
       <div className="w-full h-screen lg:grid lg:grid-cols-2">
-        <div className="flex  h-screen items-center justify-center py-12">
+        <div className="flex items-center justify-center">
           <div className="mx-auto grid w-[350px] gap-6">
             <div className="grid gap-2 text-center">
               <h1 className="text-3xl font-bold">Login</h1>
@@ -76,9 +76,9 @@ export default function Login() {
               <Button type="submit" className="w-full" onClick={onSubmit}>
                 Login
               </Button>
-              <Button variant="outline" className="w-full">
+              {/* <Button variant="outline" className="w-full">
                 Login with Google
-              </Button>
+              </Button> */}
             </div>
             <div className="mt-4 text-center text-sm">
               Don&apos;t have an account
@@ -90,11 +90,9 @@ export default function Login() {
         </div>
         <div className="hidden bg-muted lg:block">
           <img
-            src="/login-img.jpeg"
+            src="/login_hero.png"
             alt="Image"
-            width="1920"
-            height="1080"
-            className="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+            className="w-full object-cover dark:brightness-[0.2] dark:grayscale h-screen"
           />
         </div>
       </div>

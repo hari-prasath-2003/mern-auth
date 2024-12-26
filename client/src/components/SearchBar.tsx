@@ -1,6 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { X } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 function SearchBar() {
@@ -8,7 +8,12 @@ function SearchBar() {
 
   const [searchParam] = useSearchParams();
 
-  const [searchQuery, setSearchQuery] = useState(() => searchParam.get("q") || "");
+  const [searchQuery, setSearchQuery] = useState();
+
+  useEffect(() => {
+    const query = searchParam.get("q");
+    setSearchQuery(query);
+  }, [searchParam]);
 
   function handleKeyDown(e) {
     if (!searchQuery) return;

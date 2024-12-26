@@ -1,17 +1,27 @@
-import React from "react";
 import CartProductDetail from "./CartProductDetail";
 import CartProductDTO from "../../../shared/dto/CartProductDTO";
-import withQueryHandling from "./withQueryHandling";
+import CartProductDetailListLoading from "./loading/CartProductDetailListLoading";
 
 function CartProductDetailList({
   data,
+  isLoading,
+  error,
   updateProductQuantity,
   removeProductFromCart,
 }: {
   data: CartProductDTO[];
+  isLoading: boolean;
+  error: Error | null;
   updateProductQuantity: (productId: string, newQuantity: number) => void;
   removeProductFromCart: (productId: string) => void;
 }) {
+  if (error) {
+    return <div>{"error fetching cart Product List"}</div>;
+  }
+
+  if (isLoading) {
+    return <CartProductDetailListLoading />;
+  }
   return (
     <>
       {data.map((product) => {
@@ -28,12 +38,4 @@ function CartProductDetailList({
   );
 }
 
-const EnhancedCartProductDetailList = withQueryHandling<
-  CartProductDTO[],
-  {
-    updateProductQuantity: (productId: string, newQuantity: number) => void;
-    removeProductFromCart: (productId: string) => void;
-  }
->(CartProductDetailList);
-
-export default EnhancedCartProductDetailList;
+export default CartProductDetailList;

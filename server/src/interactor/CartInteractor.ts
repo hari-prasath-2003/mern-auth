@@ -1,8 +1,9 @@
-import { NotFoundError } from "../error";
+import { ApiError, NotFoundError } from "../error";
 import { ICartInteractor } from "../interface/ICartInteractor";
 import { ICartRepository } from "../interface/ICartRepository";
 import { IProductRepository } from "../interface/IProductRepository";
 import CartProductDTO from "../../../shared/dto/CartProductDTO";
+import { isValidObjectId } from "mongoose";
 
 export class CartInteractor implements ICartInteractor {
   private cartRepository: ICartRepository;
@@ -66,6 +67,10 @@ export class CartInteractor implements ICartInteractor {
 
     if (!userCart) {
       throw new NotFoundError("cart not fonud");
+    }
+
+    if (!isValidObjectId(productId)) {
+      throw new ApiError("invalid product Id", 400);
     }
 
     let productInCart = false;

@@ -1,17 +1,39 @@
-import ScrollLayout from "@/layout/ScrollLayout";
 import CategoryBadge from "./CategoryBadge";
-import withQueryHandling from "./withQueryHandling";
+import { QueryObserverSuccessResult, useQuery } from "@tanstack/react-query";
+import useApi from "@/hooks/useApi";
+import ScrollLayout from "@/layout/ScrollLayout";
+import CategoryBadgeLoading from "./loading/CategoryBadgeLoading";
 
-function ProductCategoryList({ data }: { data: string[] }) {
+function ProductCategoryList() {
+  const api = useApi();
+
+  const productCategoryListQuery = useQuery({
+    queryKey: ["category"],
+    queryFn: async () => {
+      const response = await api.get("/home/categories");
+      return response.data;
+    },
+  }) as QueryObserverSuccessResult<string[]>;
+
+  if (productCategoryListQuery.isError) {
+    return <div>{"error something went wrong while fetching category list"}</div>;
+  }
+
+  if (productCategoryListQuery.isLoading) {
+    return (
+      <ScrollLayout>
+        <CategoryBadgeLoading />
+      </ScrollLayout>
+    );
+  }
+
   return (
-    <ScrollLayout>
-      {data?.map((category) => (
-        <CategoryBadge key={category} category={category} />
+    <>
+      {productCategoryListQuery.data.map((category) => (
+        <CategoryBadge category={category} />
       ))}
-    </ScrollLayout>
+    </>
   );
 }
 
-const EnhancedCategoryList = withQueryHandling<string[]>(ProductCategoryList);
-
-export default EnhancedCategoryList;
+export default ProductCategoryList;

@@ -1,12 +1,18 @@
 import { Card, CardContent, CardHeader } from "./ui/card";
 import { Button } from "./ui/button";
 import { Separator } from "./ui/separator";
-import withQueryHandling from "./withQueryHandling";
 import CartDetailsDTO from "../../../shared/dto/CartDetailsDTO";
+import CartDetailLoading from "./loading/CartDetailLoading";
 
 type CartDetailProp = Omit<CartDetailsDTO, "products">;
 
-function CartDetail({ data }: { data: CartDetailProp }) {
+function CartDetail({ data, isLoading, error }: { data: CartDetailProp; isLoading: boolean; error: Error | null }) {
+  if (error) {
+    return <div>{"error fetching cart detail"}</div>;
+  }
+  if (isLoading) {
+    return <CartDetailLoading />;
+  }
   return (
     <Card>
       <CardHeader>
@@ -44,6 +50,4 @@ function CartDetail({ data }: { data: CartDetailProp }) {
   );
 }
 
-const EnhancedCartDetail = withQueryHandling<CartDetailProp>(CartDetail);
-
-export default EnhancedCartDetail;
+export default CartDetail;

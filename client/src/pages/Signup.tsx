@@ -71,9 +71,9 @@ export default function Signup() {
               <Button type="submit" className="w-full" onClick={onSubmit}>
                 Sign up
               </Button>
-              <Button variant="outline" className="w-full">
+              {/* <Button variant="outline" className="w-full">
                 Signup with Google
-              </Button>
+              </Button> */}
             </div>
             <div className="mt-4 text-center text-sm">
               have an account?{" "}
@@ -85,11 +85,9 @@ export default function Signup() {
         </div>
         <div className="hidden bg-muted lg:block">
           <img
-            src="/login-img.jpeg"
+            src="/login_hero.png"
             alt="Image"
-            width="1920"
-            height="1080"
-            className="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+            className="w-full object-cover dark:brightness-[0.2] dark:grayscale h-screen"
           />
         </div>
       </div>

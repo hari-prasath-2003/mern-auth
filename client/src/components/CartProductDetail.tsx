@@ -15,8 +15,6 @@ function CartProductDetail({
   const [quantity, setQuantity] = useState(product.quantity);
 
   useEffect(() => {
-    console.log(quantity, product.quantity);
-
     if (quantity === product.quantity) return;
 
     const debounceTimer = setTimeout(() => {

@@ -3,7 +3,7 @@ import { ICartController } from "../interface/ICartController";
 import { ICartInteractor } from "../interface/ICartInteractor";
 
 export class CartController implements ICartController {
-  private cartInteractor;
+  private cartInteractor: ICartInteractor;
 
   constructor(cartInteractor: ICartInteractor) {
     this.cartInteractor = cartInteractor;
@@ -39,7 +39,11 @@ export class CartController implements ICartController {
       const productId = req.params.productId;
       const newQuantity = req.body.quantity;
 
-      await this.cartInteractor.updateProductQuantity(userId, productId, newQuantity);
+      if (newQuantity >= 1) {
+        await this.cartInteractor.updateProductQuantity(userId, productId, newQuantity);
+      } else {
+        await this.cartInteractor.removeProduct(userId, productId);
+      }
 
       return res.json("product quantity updated successfully");
     } catch (error) {
