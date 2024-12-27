@@ -1,8 +1,10 @@
 import { Button } from "./ui/button";
 import { Badge, Star } from "lucide-react";
 import { Progress } from "./ui/progress";
+import { useState } from "react";
 
 function CommentSection({ productId }: { productId: string }) {
+  const [comment, setComment] = useState("");
   return (
     <div className="flex border-2 border-gray-100 p-5 h-[344px] box-content gap-5">
       <div className="max-w-[400px]">
